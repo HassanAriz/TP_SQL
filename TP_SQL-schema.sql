@@ -13,12 +13,12 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-USE `tpsql` ;
+USE `TP_SQL` ;
 
 -- -----------------------------------------------------
--- Table `tpsql`.`year`
+-- Table `TP_SQL`.`year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tpsql`.`year` (
+CREATE TABLE IF NOT EXISTS `TP_SQL`.`year` (
  `id` INT NOT NULL AUTO_INCREMENT,
  `label` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`id`))
@@ -26,9 +26,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tpsql`.`module`
+-- Table `TP_SQL`.`module`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tpsql`.`module` (
+CREATE TABLE IF NOT EXISTS `TP_SQL`.`module` (
  `id` INT NOT NULL AUTO_INCREMENT,
  `name` VARCHAR(255) NOT NULL,
  `year` INT NOT NULL,
@@ -38,9 +38,9 @@ ENGINE = INNODB;
 
 
 -- -----------------------------------------------------
--- Table `tpsql`.`student`
+-- Table `TP_SQL`.`student`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tpsql`.`student` (
+CREATE TABLE IF NOT EXISTS `TP_SQL`.`student` (
  `id` INT NOT NULL AUTO_INCREMENT,
  `firstname` VARCHAR(255) NOT NULL,
  `lastname` VARCHAR(255) NOT NULL,
@@ -49,9 +49,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tpsql`.`enrolment`
+-- Table `TP_SQL`.`enrolment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tpsql`.`enrolment` (
+CREATE TABLE IF NOT EXISTS `TP_SQL`.`enrolment` (
  `id_student` INT NOT NULL,
  `id_year` INT NOT NULL,
  `from` DATETIME NOT NULL,
@@ -61,21 +61,21 @@ CREATE TABLE IF NOT EXISTS `tpsql`.`enrolment` (
  PRIMARY KEY (`id_student`, `id_year`),
  CONSTRAINT `fk_id_student`
    FOREIGN KEY (`id_student`)
-   REFERENCES `tpsql`.`student` (`id`)
+   REFERENCES `TP_SQL`.`student` (`id`)
    ON DELETE RESTRICT
    ON UPDATE RESTRICT,
  CONSTRAINT `id_year`
    FOREIGN KEY (`id_year`)
-   REFERENCES `tpsql`.`year` (`id`)
+   REFERENCES `TP_SQL`.`year` (`id`)
    ON DELETE RESTRICT
    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tpsql`.`assessment`
+-- Table `TP_SQL`.`assessment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tpsql`.`assessment` (
+CREATE TABLE IF NOT EXISTS `TP_SQL`.`assessment` (
  `id_student` INT NOT NULL,
  `id_module` INT NOT NULL,
  `attempted` DATETIME NOT NULL,
@@ -86,12 +86,12 @@ CREATE TABLE IF NOT EXISTS `tpsql`.`assessment` (
  PRIMARY KEY (`attempted`, `id_module`, `id_student`),
  CONSTRAINT `fk_id_student_assessment`
    FOREIGN KEY (`id_student`)
-   REFERENCES `tpsql`.`student` (`id`)
+   REFERENCES `TP_SQL`.`student` (`id`)
    ON DELETE RESTRICT
    ON UPDATE RESTRICT,
  CONSTRAINT `fk_id_module_assessment`
    FOREIGN KEY (`id_module`)
-   REFERENCES `tpsql`.`module` (`id`)
+   REFERENCES `TP_SQL`.`module` (`id`)
    ON DELETE RESTRICT
    ON UPDATE RESTRICT
  )
@@ -102,4 +102,3 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-ALTER TABLE `module` ADD FOREIGN KEY (`year`) REFERENCES `year`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
