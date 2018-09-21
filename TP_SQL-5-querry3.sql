@@ -1,0 +1,1 @@
+SELECT AVG( grade ) AS grade_average FROM assesment ;
